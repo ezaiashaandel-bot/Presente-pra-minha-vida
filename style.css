@@ -6,6 +6,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -13,13 +14,19 @@ html,
 body {
     width: 100%;
     height: 100%;
+
     overflow: hidden;
 }
 
 body {
     background: #000;
+
     color: #fff;
-    font-family: Georgia, "Times New Roman", serif;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 }
 
 
@@ -28,8 +35,13 @@ body {
 ========================================= */
 
 #intro,
-#investigation {
+#investigation,
+#questions,
+#caseComplete,
+#pullUp {
+
     position: fixed;
+
     inset: 0;
 
     width: 100%;
@@ -40,14 +52,31 @@ body {
 
 
 /* =========================================
+   CLASSE OCULTA
+========================================= */
+
+.hidden {
+
+    opacity: 0 !important;
+
+    visibility: hidden !important;
+
+    pointer-events: none !important;
+}
+
+
+/* =========================================
    ABERTURA
 ========================================= */
 
 #intro {
+
     background: #000;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     transition:
@@ -56,10 +85,14 @@ body {
 }
 
 
-/* Atmosfera */
+/* =========================================
+   ATMOSFERA
+========================================= */
 
 .atmosphere {
+
     position: absolute;
+
     inset: -30%;
 
     pointer-events: none;
@@ -67,13 +100,18 @@ body {
     background:
         radial-gradient(
             circle at 50% 50%,
-            rgba(255, 255, 255, 0.045),
+            rgba(255,255,255,0.045),
             transparent 28%
         );
 
     filter: blur(45px);
 
-    animation: atmosphereMove 12s ease-in-out infinite alternate;
+    animation:
+        atmosphereMove
+        12s
+        ease-in-out
+        infinite
+        alternate;
 }
 
 @keyframes atmosphereMove {
@@ -95,7 +133,9 @@ body {
 ========================================= */
 
 #particles {
+
     position: absolute;
+
     inset: 0;
 
     overflow: hidden;
@@ -104,25 +144,31 @@ body {
 }
 
 .particle {
+
     position: absolute;
 
     width: 2px;
     height: 2px;
 
-    background: rgba(255, 255, 255, 0.35);
+    background:
+        rgba(255,255,255,0.35);
 
     border-radius: 50%;
 
     animation:
-        floatParticle linear infinite;
+        floatParticle
+        linear
+        infinite;
 }
 
 @keyframes floatParticle {
 
     from {
+
         transform:
             translateY(110vh)
             translateX(0);
+
         opacity: 0;
     }
 
@@ -135,9 +181,11 @@ body {
     }
 
     to {
+
         transform:
             translateY(-10vh)
             translateX(25px);
+
         opacity: 0;
     }
 }
@@ -148,7 +196,9 @@ body {
 ========================================= */
 
 #loveMessage {
+
     position: relative;
+
     z-index: 5;
 
     width: 90%;
@@ -157,7 +207,8 @@ body {
 
     opacity: 0;
 
-    transform: translateY(10px);
+    transform:
+        translateY(10px);
 
     transition:
         opacity 4s ease,
@@ -165,24 +216,32 @@ body {
 }
 
 #loveMessage.show {
+
     opacity: 1;
 
-    transform: translateY(0);
+    transform:
+        translateY(0);
 }
 
 #loveMessage h1 {
-    font-size: clamp(25px, 7vw, 42px);
+
+    font-size:
+        clamp(25px, 7vw, 42px);
 
     font-weight: normal;
 
     letter-spacing: 1px;
 
     text-shadow:
-        0 0 10px rgba(255, 255, 255, 0.15),
-        0 0 25px rgba(255, 255, 255, 0.05);
+        0 0 10px
+        rgba(255,255,255,0.15),
+
+        0 0 25px
+        rgba(255,255,255,0.05);
 }
 
 #loveMessage p {
+
     margin-top: 12px;
 
     font-size: 13px;
@@ -194,21 +253,13 @@ body {
 
 
 /* =========================================
-   CLASSES DE CONTROLE
-========================================= */
-
-.hidden {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-}
-
-
-/* =========================================
    INVESTIGAÇÃO
 ========================================= */
 
-#investigation {
+#investigation,
+#questions,
+#caseComplete {
+
     background:
         radial-gradient(
             circle at center,
@@ -220,49 +271,67 @@ body {
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
-    opacity: 1;
-
     transition:
-        opacity 2s ease,
-        visibility 2s ease;
+        opacity 1.5s ease,
+        visibility 1.5s ease;
 }
 
 
-/* Conteúdo */
+/* =========================================
+   CONTEÚDOS
+========================================= */
 
-.investigation-content {
+.investigation-content,
+.question-content,
+.complete-content {
+
     width: 86%;
+
     max-width: 430px;
 
     text-align: center;
 
-    animation: investigationEnter 2s ease forwards;
+    animation:
+        contentEnter
+        1.5s
+        ease
+        forwards;
 }
 
-@keyframes investigationEnter {
+@keyframes contentEnter {
 
     from {
+
         opacity: 0;
-        transform: translateY(25px);
+
+        transform:
+            translateY(25px);
     }
 
     to {
+
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+            translateY(0);
     }
 }
 
 
 /* =========================================
-   CABEÇALHO DO ARQUIVO
+   CABEÇALHOS
 ========================================= */
 
-.file-top {
+.file-top,
+.question-header {
+
     display: flex;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
     font-family:
         "Courier New",
@@ -272,17 +341,22 @@ body {
 
     letter-spacing: 1.5px;
 
-    color: rgba(255, 255, 255, 0.45);
+    color:
+        rgba(255,255,255,0.45);
 }
 
-.line {
+.line,
+.question-line {
+
     width: 100%;
+
     height: 1px;
 
-    margin: 12px 0 35px;
+    margin:
+        12px 0 35px;
 
     background:
-        rgba(255, 255, 255, 0.15);
+        rgba(255,255,255,0.15);
 }
 
 
@@ -291,6 +365,7 @@ body {
 ========================================= */
 
 .file-icon {
+
     font-size: 42px;
 
     margin-bottom: 12px;
@@ -301,6 +376,7 @@ body {
 }
 
 .classified {
+
     font-family:
         "Courier New",
         monospace;
@@ -309,7 +385,8 @@ body {
 
     letter-spacing: 3px;
 
-    color: rgba(255, 255, 255, 0.4);
+    color:
+        rgba(255,255,255,0.4);
 
     margin-bottom: 12px;
 }
@@ -319,7 +396,10 @@ body {
    TEXTOS
 ========================================= */
 
-.investigation-content h2 {
+.investigation-content h2,
+.question-content h2,
+.complete-content h2 {
+
     font-size: 30px;
 
     font-weight: normal;
@@ -329,43 +409,62 @@ body {
     margin-bottom: 22px;
 }
 
-.description {
+.description,
+.question-description {
+
     font-size: 15px;
 
     line-height: 1.7;
 
-    color: rgba(255, 255, 255, 0.72);
+    color:
+        rgba(255,255,255,0.72);
 }
 
 .description.small {
+
     margin-top: 12px;
 
     font-size: 13px;
 
-    color: rgba(255, 255, 255, 0.45);
+    color:
+        rgba(255,255,255,0.45);
 }
 
 
 /* =========================================
-   BOTÃO
+   BOTÕES
 ========================================= */
 
-#startInvestigation {
-    margin-top: 35px;
+button {
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    cursor: pointer;
+
+    -webkit-user-select: none;
+
+    user-select: none;
+}
+
+#startInvestigation,
+#answerButton,
+#nextButton,
+#continueButton {
 
     width: 100%;
 
     padding: 17px 20px;
 
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border:
+        1px solid
+        rgba(255,255,255,0.25);
 
-    background: rgba(255, 255, 255, 0.03);
+    background:
+        rgba(255,255,255,0.03);
 
-    color: white;
-
-    font-family:
-        "Courier New",
-        monospace;
+    color: #fff;
 
     font-size: 12px;
 
@@ -373,22 +472,450 @@ body {
 
     border-radius: 4px;
 
-    cursor: pointer;
-
     transition:
         background 0.3s ease,
         border-color 0.3s ease,
         transform 0.15s ease;
 }
 
-#startInvestigation:active {
+#startInvestigation {
+
+    margin-top: 35px;
+}
+
+button:active {
+
     transform: scale(0.97);
 
     background:
-        rgba(255, 255, 255, 0.1);
+        rgba(255,255,255,0.1);
 
     border-color:
-        rgba(255, 255, 255, 0.5);
+        rgba(255,255,255,0.5);
+}
+
+
+/* =========================================
+   PERGUNTAS
+========================================= */
+
+#questions {
+
+    overflow-y: auto;
+
+    padding:
+        30px 0;
+}
+
+.question-content {
+
+    margin: auto;
+}
+
+.question-label {
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    color:
+        rgba(255,255,255,0.35);
+
+    margin-bottom: 15px;
+}
+
+.question-content h2 {
+
+    margin-bottom: 15px;
+}
+
+
+/* =========================================
+   CAMPO DE RESPOSTA
+========================================= */
+
+#answerInput {
+
+    width: 100%;
+
+    margin-top: 28px;
+
+    padding:
+        17px 15px;
+
+    background:
+        rgba(255,255,255,0.04);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.2);
+
+    border-radius: 4px;
+
+    outline: none;
+
+    color: #fff;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 16px;
+
+    text-align: center;
+
+    transition:
+        border-color 0.3s ease,
+        background 0.3s ease;
+}
+
+#answerInput::placeholder {
+
+    color:
+        rgba(255,255,255,0.3);
+}
+
+#answerInput:focus {
+
+    border-color:
+        rgba(255,255,255,0.5);
+
+    background:
+        rgba(255,255,255,0.07);
+}
+
+#answerButton {
+
+    margin-top: 12px;
+}
+
+
+/* =========================================
+   BOTÃO DE DICA
+========================================= */
+
+#hintButton {
+
+    margin-top: 15px;
+
+    padding:
+        8px 15px;
+
+    border: none;
+
+    background: transparent;
+
+    color:
+        rgba(255,255,255,0.4);
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+
+    text-decoration:
+        underline;
+
+    text-underline-offset: 4px;
+}
+
+
+/* =========================================
+   CAIXA DE DICA
+========================================= */
+
+#hintBox {
+
+    margin-top: 15px;
+
+    padding: 15px;
+
+    border-left:
+        2px solid
+        rgba(255,255,255,0.25);
+
+    background:
+        rgba(255,255,255,0.025);
+
+    color:
+        rgba(255,255,255,0.6);
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    text-align: left;
+}
+
+
+/* =========================================
+   RESULTADO
+========================================= */
+
+#resultBox {
+
+    min-height: 70px;
+
+    margin-top: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+.result-success {
+
+    color:
+        rgba(255,255,255,0.9);
+
+    animation:
+        resultAppear
+        0.6s
+        ease;
+}
+
+.result-error {
+
+    color:
+        rgba(255,255,255,0.55);
+
+    animation:
+        resultAppear
+        0.6s
+        ease;
+}
+
+@keyframes resultAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(10px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================
+   PRÓXIMA EVIDÊNCIA
+========================================= */
+
+#nextButton {
+
+    margin-top: 10px;
+}
+
+
+/* =========================================
+   CASO COMPLETO
+========================================= */
+
+.complete-icon {
+
+    width: 65px;
+
+    height: 65px;
+
+    margin:
+        0 auto 25px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.3);
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 25px;
+
+    animation:
+        completePulse
+        2s
+        ease-in-out
+        infinite;
+}
+
+@keyframes completePulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 0
+            rgba(255,255,255,0);
+    }
+
+    50% {
+        box-shadow:
+            0 0 25px
+            rgba(255,255,255,0.08);
+    }
+}
+
+.complete-content > p {
+
+    color:
+        rgba(255,255,255,0.7);
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+.complete-small {
+
+    margin-top: 15px;
+
+    color:
+        rgba(255,255,255,0.4) !important;
+
+    font-size: 13px !important;
+}
+
+#continueButton {
+
+    margin-top: 30px;
+}
+
+
+/* =========================================
+   PUXE PARA CIMA
+========================================= */
+
+#pullUp {
+
+    background: #000;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    transition:
+        opacity 1.5s ease,
+        visibility 1.5s ease;
+}
+
+.pull-content {
+
+    width: 85%;
+
+    text-align: center;
+
+    animation:
+        pullAppear
+        2s
+        ease
+        forwards;
+}
+
+@keyframes pullAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(25px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+.pull-content h2 {
+
+    font-size: 25px;
+
+    font-weight: normal;
+
+    margin-bottom: 15px;
+}
+
+.pull-content > p:not(.classified):not(.pull-text) {
+
+    color:
+        rgba(255,255,255,0.5);
+
+    font-size: 14px;
+}
+
+.arrow {
+
+    margin-top: 45px;
+
+    font-size: 45px;
+
+    animation:
+        arrowMove
+        1.5s
+        ease-in-out
+        infinite;
+}
+
+@keyframes arrowMove {
+
+    0%,
+    100% {
+        transform:
+            translateY(10px);
+
+        opacity: 0.35;
+    }
+
+    50% {
+        transform:
+            translateY(-10px);
+
+        opacity: 1;
+    }
+}
+
+.pull-text {
+
+    margin-top: 10px;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    color:
+        rgba(255,255,255,0.45);
 }
 
 
@@ -398,19 +925,28 @@ body {
 
 @media (max-height: 650px) {
 
-    .investigation-content {
+    .investigation-content,
+    .question-content,
+    .complete-content {
+
         transform: scale(0.9);
     }
 
-    .investigation-content h2 {
+    .investigation-content h2,
+    .question-content h2,
+    .complete-content h2 {
+
         font-size: 26px;
     }
 
-    .line {
+    .line,
+    .question-line {
+
         margin-bottom: 20px;
     }
 
     #startInvestigation {
+
         margin-top: 25px;
     }
-      }
+       }
