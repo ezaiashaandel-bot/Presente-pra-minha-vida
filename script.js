@@ -1,6 +1,6 @@
 /* =========================================
    PRESENTE PRA YUYU
-   VERSÃO 3
+   VERSÃO FINAL
 ========================================= */
 
 
@@ -9,7 +9,6 @@
 ========================================= */
 
 const TEMPO_INICIAL = 10000;
-
 const TEMPO_MENSAGEM = 8000;
 
 
@@ -685,91 +684,91 @@ for (let i = 1; i <= 30; i++) {
 
 
 /* =========================================
-   FOTO 24 RESERVADA
-========================================= */
-
-const fotosNormais =
-    fotos.filter(
-        foto => !foto.endsWith("foto24.jpg")
-    );
-
-
-/* =========================================
-   EMBARALHAR FOTOS
-========================================= */
-
-function embaralharFotos(array) {
-
-    const copia = [...array];
-
-    for (
-        let i = copia.length - 1;
-        i > 0;
-        i--
-    ) {
-
-        const j =
-            Math.floor(
-                Math.random() * (i + 1)
-            );
-
-        [
-            copia[i],
-            copia[j]
-        ] = [
-            copia[j],
-            copia[i]
-        ];
-    }
-
-    return copia;
-}
-
-
-const fotosEmbaralhadas =
-    embaralharFotos(fotosNormais);
-
-
-/* =========================================
-   GRUPOS
-========================================= */
-
-const grupo1 =
-    fotosEmbaralhadas.slice(0, 4);
-
-const grupo2 =
-    fotosEmbaralhadas.slice(4, 8);
-
-const grupo3 =
-    fotosEmbaralhadas.slice(8, 19);
-
-const grupo4 =
-    fotosEmbaralhadas.slice(19, 25);
-
-
-/* =========================================
-   FOTOS ESPECIAIS
+   FOTOS DA HISTÓRIA
+   SEM EMBARALHAR
 ========================================= */
 
 const fotoEspecial1 =
-    fotosEmbaralhadas[25];
+    "imagens/foto1.jpg";
 
 const fotoEspecial2 =
-    fotosEmbaralhadas[26];
+    "imagens/foto2.jpg";
 
 const fotoEspecial3 =
-    fotosEmbaralhadas[27];
+    "imagens/foto3.jpg";
+
+
+/*
+ * Fotos rápidas:
+ *
+ * grupo1 = foto4 até foto12
+ * grupo2 = foto13 até foto16
+ * grupo3 = foto17 até foto27
+ * grupo4 = foto28 até foto30
+ *
+ * As fotos são repetidas quando
+ * o tempo exige mais trocas.
+ */
+
+const grupo1 = [
+    "imagens/foto4.jpg",
+    "imagens/foto5.jpg",
+    "imagens/foto6.jpg",
+    "imagens/foto7.jpg",
+    "imagens/foto8.jpg",
+    "imagens/foto9.jpg",
+    "imagens/foto10.jpg",
+    "imagens/foto11.jpg",
+    "imagens/foto12.jpg"
+];
+
+const grupo2 = [
+    "imagens/foto13.jpg",
+    "imagens/foto14.jpg",
+    "imagens/foto15.jpg",
+    "imagens/foto16.jpg"
+];
+
+const grupo3 = [
+    "imagens/foto17.jpg",
+    "imagens/foto18.jpg",
+    "imagens/foto19.jpg",
+    "imagens/foto20.jpg",
+    "imagens/foto21.jpg",
+    "imagens/foto22.jpg",
+    "imagens/foto23.jpg",
+    "imagens/foto24.jpg",
+    "imagens/foto25.jpg",
+    "imagens/foto26.jpg",
+    "imagens/foto27.jpg"
+];
+
+const grupo4 = [
+    "imagens/foto28.jpg",
+    "imagens/foto29.jpg",
+    "imagens/foto30.jpg"
+];
 
 
 /* =========================================
-   CONTROLE DA EXPERIÊNCIA
+   FOTOS DE CASAMENTO
+========================================= */
+
+const casamentoFotos = [
+    "imagens/casamento1.jpg",
+    "imagens/casamento2.jpg",
+    "imagens/casamento3.jpg",
+    "imagens/casamento4.jpg"
+];
+
+
+/* =========================================
+   CONTROLE
 ========================================= */
 
 let ultimaFotoStory = "";
 
-let historiaComecou = false;
-
-let primeiraHistoriaEscrita = false;
+let animacaoStoryAtiva = false;
 
 
 /* =========================================
@@ -800,45 +799,47 @@ function mostrarFotoStory(caminho) {
         );
 
     };
-
-    storyPhoto.style.opacity = "1";
 }
 
 
 /* =========================================
-   FOTOS RÁPIDAS
+   FOTO RÁPIDA
+   200 MILISSEGUNDOS
 ========================================= */
 
 function rodarFotosRapidas(
     grupo,
-    inicio
+    inicio,
+    fim
 ) {
 
-    if (!grupo || grupo.length === 0) {
+    if (
+        !grupo ||
+        grupo.length === 0
+    ) {
         return;
     }
 
-    const tempo =
+    const tempoAtual =
         storyMusic.currentTime;
 
-    const intervalo =
-        0.300;
-
     const tempoDecorrido =
-        tempo - inicio;
+        tempoAtual - inicio;
+
+    const intervalo =
+        0.200;
 
     let indice =
         Math.floor(
             tempoDecorrido / intervalo
         );
 
-    if (indice < 0) {
-        indice = 0;
-    }
+    /*
+     * Repete as fotos em ordem.
+     */
 
-    if (indice >= grupo.length) {
-        indice = grupo.length - 1;
-    }
+    indice =
+        indice % grupo.length;
 
     mostrarFotoStory(
         grupo[indice]
@@ -884,7 +885,7 @@ function escreverHistoria(
 
 
 /* =========================================
-   PRIMEIRA PARTE DA HISTÓRIA
+   HISTÓRIA
 ========================================= */
 
 const primeiraParteHistoria =
@@ -897,11 +898,39 @@ até chegar aqui meu amor, sou muito grato por ter entrado no alone aquela madru
 
 
 /* =========================================
-   TEXTO DE ABERTURA
+   TEXTO DA ABERTURA
 ========================================= */
 
 const textoAbertura =
 "feito pra você meu amor!!";
+
+
+/* =========================================
+   TEXTO FINAL DA HISTÓRIA
+========================================= */
+
+const textoFinalHistoria =
+`E mesmo depois de tudo que passamos,
+a nossa história ainda está apenas começando.
+
+Cada conversa, cada madrugada,
+cada momento bom e cada momento difícil
+fez a gente chegar até aqui.
+
+E eu espero continuar escrevendo
+essa história ao seu lado.
+
+Eu te amo Ana Vitória.`;
+
+
+/* =========================================
+   CRÉDITOS
+========================================= */
+
+const textoCreditos =
+`Feliz 2 meses amor!
+
+Eu te amo muito meu neném.`;
 
 
 /* =========================================
@@ -914,7 +943,8 @@ function iniciarExperiencia() {
         "hidden"
     );
 
-    storyExperience.style.opacity = "1";
+    storyExperience.style.opacity =
+        "1";
 
     storyMusic.pause();
 
@@ -942,97 +972,134 @@ function iniciarExperiencia() {
 
     storyText.innerHTML = "";
 
+    storyCredits.innerHTML = "";
+
+    secretFile.innerHTML =
+        "<span>ARQUIVO SECRETO</span>";
+
+    weddingPhotoImage.src = "";
+
     ultimaFotoStory = "";
 
-    historiaComecou = false;
-
-    primeiraHistoriaEscrita = false;
+    animacaoStoryAtiva = true;
 
 
     /*
-     * A experiência começa no silêncio.
-     * O texto aparece primeiro.
+     * A música começa IMEDIATAMENTE
+     * quando a experiência é aberta.
      */
 
-    setTimeout(() => {
+    storyMusic.play()
+        .then(() => {
 
-        escreverHistoria(
-            storyOpeningText,
-            textoAbertura,
-            80
-        );
+            atualizarExperiencia();
 
-        storyOpeningText.style.opacity =
-            "1";
+        })
+        .catch(erro => {
 
-    }, 800);
+            console.error(
+                "Erro ao iniciar música:",
+                erro
+            );
 
+            /*
+             * Se o navegador bloquear,
+             * tenta novamente no próximo toque.
+             */
 
-    /*
-     * Depois de alguns segundos,
-     * a primeira história começa.
-     */
+            const iniciarMusica =
+                () => {
 
-    setTimeout(() => {
+                    storyMusic.play();
 
-        storyOpeningText.style.opacity =
-            "0";
+                };
 
-        storyBlack.style.opacity =
-            "1";
+            document.addEventListener(
+                "touchstart",
+                iniciarMusica,
+                {
+                    once: true
+                }
+            );
 
-        storyText.style.opacity =
-            "1";
+            document.addEventListener(
+                "click",
+                iniciarMusica,
+                {
+                    once: true
+                }
+            );
 
-        historiaComecou = true;
-
-        escreverHistoria(
-            storyText,
-            primeiraParteHistoria,
-            35
-        );
-
-    }, 6500);
-
-
-    /*
-     * A música começa 3 segundos
-     * depois da história.
-     */
-
-    setTimeout(() => {
-
-        storyMusic.play()
-            .then(() => {
-
-                requestAnimationFrame(
-                    atualizarExperiencia
-                );
-
-            })
-            .catch(erro => {
-
-                console.error(
-                    "Erro ao iniciar música:",
-                    erro
-                );
-
-            });
-
-    }, 9500);
+        });
 }
 
 
 /* =========================================
-   TIMELINE DA MÚSICA
+   FADE DE VOLUME
+========================================= */
+
+function diminuirVolume(
+    inicio,
+    fim,
+    volumeInicial
+) {
+
+    const progresso =
+        (storyMusic.currentTime - inicio) /
+        (fim - inicio);
+
+    const volume =
+        volumeInicial *
+        Math.max(
+            0,
+            1 - progresso
+        );
+
+    storyMusic.volume =
+        volume;
+}
+
+
+function aumentarVolume(
+    inicio,
+    fim
+) {
+
+    const progresso =
+        (storyMusic.currentTime - inicio) /
+        (fim - inicio);
+
+    storyMusic.volume =
+        Math.min(
+            1,
+            Math.max(
+                0,
+                progresso
+            )
+        );
+}
+
+
+/* =========================================
+   TIMELINE COMPLETA
 ========================================= */
 
 function atualizarExperiencia() {
 
     if (
-        storyMusic.paused ||
-        storyMusic.ended
+        !animacaoStoryAtiva
     ) {
+        return;
+    }
+
+    if (
+        storyMusic.paused
+    ) {
+
+        requestAnimationFrame(
+            atualizarExperiencia
+        );
+
         return;
     }
 
@@ -1041,13 +1108,12 @@ function atualizarExperiencia() {
 
 
     /* =====================================
-       00:00 → 05.0
-       Música começa com história
+       00.0 → 07.0
+       TELA PRETA
     ====================================== */
 
     if (
-        tempo >= 0 &&
-        tempo < 5
+        tempo < 7.0
     ) {
 
         storyBlack.style.opacity =
@@ -1060,18 +1126,90 @@ function atualizarExperiencia() {
             "0";
 
         storyText.style.opacity =
-            "1";
+            "0";
+
+        storyCredits.style.opacity =
+            "0";
+
+        secretFile.style.opacity =
+            "0";
+
+        weddingPhotos.style.opacity =
+            "0";
+
+        finalLove.style.opacity =
+            "0";
     }
 
 
     /* =====================================
-       05.0 → 12.0
-       HISTÓRIA
+       07.0 → 11.0
+       TEXTO DE ABERTURA
     ====================================== */
 
     else if (
-        tempo >= 5 &&
-        tempo < 12
+        tempo >= 7.0 &&
+        tempo < 11.0
+    ) {
+
+        storyBlack.style.opacity =
+            "1";
+
+        storyOpeningText.style.opacity =
+            "1";
+
+        storyPhoto.style.opacity =
+            "0";
+
+        storyText.style.opacity =
+            "0";
+
+        if (
+            storyOpeningText.innerHTML === ""
+        ) {
+
+            escreverHistoria(
+                storyOpeningText,
+                textoAbertura,
+                80
+            );
+        }
+
+    }
+
+
+    /* =====================================
+       11.0 → 30.0
+       SUMINDO / PRETO
+    ====================================== */
+
+    else if (
+        tempo >= 11.0 &&
+        tempo < 30.0
+    ) {
+
+        storyBlack.style.opacity =
+            "1";
+
+        storyOpeningText.style.opacity =
+            "0";
+
+        storyPhoto.style.opacity =
+            "0";
+
+        storyText.style.opacity =
+            "0";
+    }
+
+
+    /* =====================================
+       30.0 → 40.0
+       PRIMEIRA PARTE DA HISTÓRIA
+    ====================================== */
+
+    else if (
+        tempo >= 30.0 &&
+        tempo < 40.0
     ) {
 
         storyBlack.style.opacity =
@@ -1085,20 +1223,35 @@ function atualizarExperiencia() {
 
         storyText.style.opacity =
             "1";
+
+        if (
+            storyText.innerHTML === ""
+        ) {
+
+            escreverHistoria(
+                storyText,
+                primeiraParteHistoria,
+                28
+            );
+        }
     }
 
 
     /* =====================================
-       12.0 → 16.0
+       40.0 → 46.3
        PRIMEIRA FOTO
+       FICA PARADA
     ====================================== */
 
     else if (
-        tempo >= 12 &&
-        tempo < 16
+        tempo >= 40.0 &&
+        tempo < 46.3
     ) {
 
         storyBlack.style.opacity =
+            "0";
+
+        storyOpeningText.style.opacity =
             "0";
 
         storyText.style.opacity =
@@ -1114,73 +1267,38 @@ function atualizarExperiencia() {
 
 
     /* =====================================
-       16.0 → 20.0
-       SEQUÊNCIA 1
+       46.3 → 50.3
+       9 FOTOS — 200ms
     ====================================== */
 
     else if (
-        tempo >= 16 &&
-        tempo < 20
+        tempo >= 46.3 &&
+        tempo < 50.3
     ) {
-
-        storyBlack.style.opacity =
-            "0";
-
-        storyText.style.opacity =
-            "0";
 
         storyPhoto.style.opacity =
             "1";
 
         rodarFotosRapidas(
             grupo1,
-            16
+            46.3,
+            50.3
         );
     }
 
 
     /* =====================================
-       20.0 → 24.0
+       50.3 → 54.0
        FOTO ESPECIAL
     ====================================== */
 
     else if (
-        tempo >= 20 &&
-        tempo < 24
+        tempo >= 50.3 &&
+        tempo < 54.0
     ) {
 
-        mostrarFotoStory(
-            fotoEspecial1
-        );
-    }
-
-
-    /* =====================================
-       24.0 → 28.0
-       SEQUÊNCIA 2
-    ====================================== */
-
-    else if (
-        tempo >= 24 &&
-        tempo < 28
-    ) {
-
-        rodarFotosRapidas(
-            grupo2,
-            24
-        );
-    }
-
-
-    /* =====================================
-       28.0 → 33.0
-       FOTO ESPECIAL 2
-    ====================================== */
-
-    else if (
-        tempo >= 28 &&
-        tempo < 33
-    ) {
+        storyPhoto.style.opacity =
+            "1";
 
         mostrarFotoStory(
             fotoEspecial2
@@ -1189,31 +1307,38 @@ function atualizarExperiencia() {
 
 
     /* =====================================
-       33.0 → 36.3
-       SEQUÊNCIA 3
+       54.0 → 57.0
+       4 FOTOS — 200ms
     ====================================== */
 
     else if (
-        tempo >= 33 &&
-        tempo < 36.3
+        tempo >= 54.0 &&
+        tempo < 57.0
     ) {
 
+        storyPhoto.style.opacity =
+            "1";
+
         rodarFotosRapidas(
-            grupo3,
-            33
+            grupo2,
+            54.0,
+            57.0
         );
     }
 
 
     /* =====================================
-       36.3 → 41.0
-       FOTO ESPECIAL 3
+       57.0 → 61.7
+       FOTO ESPECIAL
     ====================================== */
 
     else if (
-        tempo >= 36.3 &&
-        tempo < 41
+        tempo >= 57.0 &&
+        tempo < 61.7
     ) {
+
+        storyPhoto.style.opacity =
+            "1";
 
         mostrarFotoStory(
             fotoEspecial3
@@ -1222,74 +1347,124 @@ function atualizarExperiencia() {
 
 
     /* =====================================
-       41.0 → 44.5
-       ÚLTIMA SEQUÊNCIA
+       61.7 → 65.0
+       11 FOTOS — 200ms
     ====================================== */
 
     else if (
-        tempo >= 41 &&
-        tempo < 44.5
+        tempo >= 61.7 &&
+        tempo < 65.0
     ) {
 
-        const tempoDecorrido =
-            tempo - 41;
+        storyPhoto.style.opacity =
+            "1";
 
-        const intervalo =
-            0.300;
-
-        const indice =
-            Math.floor(
-                tempoDecorrido /
-                intervalo
-            );
-
-        if (
-            indice <
-            grupo4.length
-        ) {
-
-            mostrarFotoStory(
-                grupo4[indice]
-            );
-
-        } else {
-
-            mostrarFotoStory(
-                "imagens/foto24.jpg"
-            );
-        }
+        rodarFotosRapidas(
+            grupo3,
+            61.7,
+            65.0
+        );
     }
 
 
     /* =====================================
-       44.5 → 48.0
-       FOTO 24
+       65.0 → 69.5
+       OUTRA FOTO ESPECIAL
     ====================================== */
 
     else if (
-        tempo >= 44.5 &&
-        tempo < 48
+        tempo >= 65.0 &&
+        tempo < 69.5
+    ) {
+
+        storyPhoto.style.opacity =
+            "1";
+
+        mostrarFotoStory(
+            "imagens/foto28.jpg"
+        );
+    }
+
+
+    /* =====================================
+       69.5 → 73.0
+       ÚLTIMA PARTE DAS FOTOS
+    ====================================== */
+
+    else if (
+        tempo >= 69.5 &&
+        tempo < 73.0
+    ) {
+
+        storyPhoto.style.opacity =
+            "1";
+
+        rodarFotosRapidas(
+            grupo4,
+            69.5,
+            73.0
+        );
+    }
+
+
+    /* =====================================
+       73.0 → 76.5
+       ÚLTIMA FOTO
+       SUMINDO
+    ====================================== */
+
+    else if (
+        tempo >= 73.0 &&
+        tempo < 76.5
     ) {
 
         mostrarFotoStory(
-            "imagens/foto24.jpg"
+            "imagens/foto30.jpg"
         );
 
         const progresso =
-            (tempo - 44.5) / 3.5;
+            (tempo - 73.0) /
+            3.5;
 
         storyPhoto.style.opacity =
-            String(1 - progresso);
+            String(
+                Math.max(
+                    0,
+                    1 - progresso
+                )
+            );
     }
 
 
     /* =====================================
-       48.0 EM DIANTE
-       VOLTA PARA O PRETO
+       76.5 → 77.0
+       TELA PRETA
     ====================================== */
 
     else if (
-        tempo >= 48
+        tempo >= 76.5 &&
+        tempo < 77.0
+    ) {
+
+        storyPhoto.style.opacity =
+            "0";
+
+        storyBlack.style.opacity =
+            "1";
+
+        storyText.style.opacity =
+            "0";
+    }
+
+
+    /* =====================================
+       77.0 → 115.0
+       CONTINUAÇÃO DA HISTÓRIA
+    ====================================== */
+
+    else if (
+        tempo >= 77.0 &&
+        tempo < 115.0
     ) {
 
         storyPhoto.style.opacity =
@@ -1300,6 +1475,282 @@ function atualizarExperiencia() {
 
         storyText.style.opacity =
             "1";
+
+        if (
+            storyText.innerHTML === "" ||
+            storyText.innerHTML === primeiraParteHistoria
+        ) {
+
+            escreverHistoria(
+                storyText,
+                textoFinalHistoria,
+                35
+            );
+        }
+    }
+
+
+    /* =====================================
+       115.0 → 153.0
+       MÚSICA ABAIXANDO
+       TEXTO CONTINUA
+    ====================================== */
+
+    else if (
+        tempo >= 115.0 &&
+        tempo < 153.0
+    ) {
+
+        storyBlack.style.opacity =
+            "1";
+
+        storyPhoto.style.opacity =
+            "0";
+
+        storyText.style.opacity =
+            "1";
+
+        diminuirVolume(
+            115.0,
+            125.0,
+            1
+        );
+    }
+
+
+    /* =====================================
+       153.0 → 175.0
+       CRÉDITOS
+       MÚSICA SUBINDO
+    ====================================== */
+
+    else if (
+        tempo >= 153.0 &&
+        tempo < 175.0
+    ) {
+
+        storyBlack.style.opacity =
+            "1";
+
+        storyText.style.opacity =
+            "0";
+
+        storyCredits.style.opacity =
+            "1";
+
+        aumentarVolume(
+            153.0,
+            163.0
+        );
+
+        if (
+            storyCredits.innerHTML === ""
+        ) {
+
+            escreverHistoria(
+                storyCredits,
+                textoCreditos,
+                65
+            );
+        }
+    }
+
+
+    /* =====================================
+       175.0 → 180.0
+       FINAL DOS CRÉDITOS
+    ====================================== */
+
+    else if (
+        tempo >= 175.0 &&
+        tempo < 180.0
+    ) {
+
+        storyCredits.style.opacity =
+            String(
+                Math.max(
+                    0,
+                    1 -
+                    ((tempo - 175.0) / 5.0)
+                )
+            );
+
+        storyBlack.style.opacity =
+            "1";
+    }
+
+
+    /* =====================================
+       180.0 → 183.5
+       ARQUIVO SECRETO
+    ====================================== */
+
+    else if (
+        tempo >= 180.0 &&
+        tempo < 183.5
+    ) {
+
+        storyBlack.style.opacity =
+            "1";
+
+        storyCredits.style.opacity =
+            "0";
+
+        secretFile.style.opacity =
+            String(
+                Math.min(
+                    1,
+                    (tempo - 180.0) / 2.5
+                )
+            );
+    }
+
+
+    /* =====================================
+       183.5
+       CORTE BRUTAL
+       CASAMENTO
+    ====================================== */
+
+    else if (
+        tempo >= 183.5 &&
+        tempo < 187.4
+    ) {
+
+        secretFile.style.opacity =
+            "0";
+
+        storyBlack.style.opacity =
+            "0";
+
+        weddingPhotos.style.opacity =
+            "1";
+
+        weddingPhotoImage.src =
+            casamentoFotos[0];
+    }
+
+
+    /* =====================================
+       187.4 → 191.0
+       FOTO CASAMENTO 2
+    ====================================== */
+
+    else if (
+        tempo >= 187.4 &&
+        tempo < 191.0
+    ) {
+
+        weddingPhotos.style.opacity =
+            "1";
+
+        weddingPhotoImage.src =
+            casamentoFotos[1];
+    }
+
+
+    /* =====================================
+       191.0 → 195.0
+       FOTO CASAMENTO 3
+    ====================================== */
+
+    else if (
+        tempo >= 191.0 &&
+        tempo < 195.0
+    ) {
+
+        weddingPhotos.style.opacity =
+            "1";
+
+        weddingPhotoImage.src =
+            casamentoFotos[2];
+    }
+
+
+    /* =====================================
+       195.0 → 199.0
+       FOTO CASAMENTO 4
+    ====================================== */
+
+    else if (
+        tempo >= 195.0 &&
+        tempo < 199.0
+    ) {
+
+        weddingPhotos.style.opacity =
+            "1";
+
+        weddingPhotoImage.src =
+            casamentoFotos[3];
+    }
+
+
+    /* =====================================
+       199.0 → 205.0
+       FOTO ESPECIAL DO CASAMENTO
+    ====================================== */
+
+    else if (
+        tempo >= 199.0 &&
+        tempo < 205.0
+    ) {
+
+        weddingPhotos.style.opacity =
+            "1";
+
+        weddingPhotoImage.src =
+            casamentoFotos[3];
+    }
+
+
+    /* =====================================
+       205.0 → 209.6
+       PRETO + EU TE AMO
+    ====================================== */
+
+    else if (
+        tempo >= 205.0
+    ) {
+
+        weddingPhotos.style.opacity =
+            String(
+                Math.max(
+                    0,
+                    1 -
+                    ((tempo - 205.0) / 2.5)
+                )
+            );
+
+        storyBlack.style.opacity =
+            "1";
+
+        finalLove.style.opacity =
+            String(
+                Math.min(
+                    1,
+                    (tempo - 205.0) / 2.5
+                )
+            );
+
+        finalLove.innerHTML =
+            "Eu te amo Ana Vitória";
+    }
+
+
+    /* =====================================
+       FIM
+    ====================================== */
+
+    if (
+        tempo >= 209.6 ||
+        storyMusic.ended
+    ) {
+
+        animacaoStoryAtiva = false;
+
+        storyMusic.volume = 0;
+
+        return;
     }
 
 
