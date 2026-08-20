@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
 
@@ -24,13 +25,10 @@
 
     <main id="intro">
 
-        <!-- Partículas -->
         <div id="particles"></div>
 
-        <!-- Luz/neblina -->
         <div class="atmosphere"></div>
 
-        <!-- Texto principal -->
         <section id="loveMessage" class="hidden">
 
             <h1>feito pra você meu amor!!</h1>
@@ -86,8 +84,142 @@
     </main>
 
 
+    <!-- =====================================
+         PERGUNTAS
+    ====================================== -->
+
+    <main id="questions" class="hidden">
+
+        <div class="question-content">
+
+            <div class="question-header">
+
+                <span id="evidenceNumber">
+                    EVIDÊNCIA Nº 01
+                </span>
+
+                <span>
+                    CONFIDENCIAL
+                </span>
+
+            </div>
+
+            <div class="question-line"></div>
+
+            <p class="question-label">
+                INVESTIGAÇÃO
+            </p>
+
+            <h2 id="questionTitle">
+                Onde tudo começou?
+            </h2>
+
+            <p class="question-description">
+                Digite a resposta encontrada nos registros.
+            </p>
+
+            <input
+                id="answerInput"
+                type="text"
+                autocomplete="off"
+                autocapitalize="sentences"
+                placeholder="Digite sua resposta..."
+            >
+
+            <button id="answerButton">
+                INVESTIGAR
+            </button>
+
+            <button id="hintButton">
+                VER DICA
+            </button>
+
+            <div id="hintBox" class="hidden"></div>
+
+            <div id="resultBox"></div>
+
+            <button id="nextButton" class="hidden">
+                PRÓXIMA EVIDÊNCIA →
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================
+         CASO ENCERRADO
+    ====================================== -->
+
+    <main id="caseComplete" class="hidden">
+
+        <div class="complete-content">
+
+            <div class="complete-icon">
+                ✓
+            </div>
+
+            <p class="classified">
+                INVESTIGAÇÃO CONCLUÍDA
+            </p>
+
+            <h2>
+                CASO ENCERRADO
+            </h2>
+
+            <p>
+                Todas as evidências foram encontradas.
+            </p>
+
+            <p class="complete-small">
+                Mas talvez exista algo esperando
+                para ser descoberto...
+            </p>
+
+            <button id="continueButton">
+                CONTINUAR
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================
+         PRÓXIMA PARTE — PLACEHOLDER
+    ====================================== -->
+
+    <main id="pullUp" class="hidden">
+
+        <div class="pull-content">
+
+            <p class="classified">
+                ARQUIVO FINAL
+            </p>
+
+            <h2>
+                A investigação terminou.
+            </h2>
+
+            <p>
+                Mas a nossa história continua.
+            </p>
+
+            <div class="arrow">
+                ↑
+            </div>
+
+            <p class="pull-text">
+                PUXE PARA CIMA
+            </p>
+
+        </div>
+
+    </main>
+
+
     <script src="script.js"></script>
 
 </body>
-              </html>
 
+                </html>
