@@ -1,7 +1,6 @@
 /* =========================================
    PRESENTE PRA YUYU
-   VERSÃO 2
-   ABERTURA + INVESTIGAÇÃO
+   VERSÃO 3
 ========================================= */
 
 
@@ -11,7 +10,7 @@
 
 const TEMPO_INICIAL = 10000;
 
-const TEMPO_MENSAGEM = 5000;
+const TEMPO_MENSAGEM = 8000;
 
 
 /* =========================================
@@ -299,7 +298,6 @@ function esconderMensagem() {
 
     }, 1000);
 
-
     setTimeout(() => {
 
         intro.classList.add("hidden");
@@ -372,7 +370,14 @@ function carregarEvidencia() {
 
     hintButton.disabled = false;
 
-    answerInput.focus();
+    hintButton.textContent =
+        "VER DICA";
+
+    setTimeout(() => {
+
+        answerInput.focus();
+
+    }, 100);
 }
 
 
@@ -414,10 +419,8 @@ function verificarResposta() {
         return;
     }
 
-
     const evidencia =
         evidencias[evidenciaAtual];
-
 
     const acertou =
         evidencia.respostas.some(
@@ -425,10 +428,6 @@ function verificarResposta() {
                 normalizar(respostaCorreta) === resposta
         );
 
-
-    /* =====================================
-       ACERTO
-    ====================================== */
 
     if (acertou) {
 
@@ -464,10 +463,6 @@ function verificarResposta() {
     }
 
 
-    /* =====================================
-       ERRO
-    ====================================== */
-
     resultBox.innerHTML =
         `<div class="result-error">
             ✗ EVIDÊNCIA INCORRETA<br><br>
@@ -476,7 +471,6 @@ function verificarResposta() {
                 aos registros encontrados.
             </small>
         </div>`;
-
 }
 
 
@@ -491,7 +485,7 @@ answerButton.addEventListener(
 
 
 /* =========================================
-   ENTER NO CELULAR/TECLADO
+   ENTER
 ========================================= */
 
 answerInput.addEventListener(
@@ -676,7 +670,7 @@ const finalLove =
 
 
 /* =========================================
-   FOTOS
+   CAMINHOS DAS FOTOS
 ========================================= */
 
 const fotos = [];
@@ -684,14 +678,14 @@ const fotos = [];
 for (let i = 1; i <= 30; i++) {
 
     fotos.push(
-        `imagens/fotos/foto${i}.jpg`
+        `imagens/foto${i}.jpg`
     );
 
 }
 
 
 /* =========================================
-   FOTO 24 É RESERVADA
+   FOTO 24 RESERVADA
 ========================================= */
 
 const fotosNormais =
@@ -701,7 +695,7 @@ const fotosNormais =
 
 
 /* =========================================
-   EMBARALHAR
+   EMBARALHAR FOTOS
 ========================================= */
 
 function embaralharFotos(array) {
@@ -768,14 +762,14 @@ const fotoEspecial3 =
 
 
 /* =========================================
-   CONTROLE
+   CONTROLE DA EXPERIÊNCIA
 ========================================= */
-
-let ultimoGrupo = null;
 
 let ultimaFotoStory = "";
 
 let historiaComecou = false;
+
+let primeiraHistoriaEscrita = false;
 
 
 /* =========================================
@@ -783,6 +777,10 @@ let historiaComecou = false;
 ========================================= */
 
 function mostrarFotoStory(caminho) {
+
+    if (!caminho) {
+        return;
+    }
 
     if (
         ultimaFotoStory === caminho
@@ -794,18 +792,31 @@ function mostrarFotoStory(caminho) {
 
     storyPhotoImage.src = caminho;
 
+    storyPhotoImage.onerror = () => {
+
+        console.error(
+            "Não foi possível carregar:",
+            caminho
+        );
+
+    };
+
     storyPhoto.style.opacity = "1";
 }
 
 
 /* =========================================
-   SEQUÊNCIA RÁPIDA
+   FOTOS RÁPIDAS
 ========================================= */
 
 function rodarFotosRapidas(
     grupo,
     inicio
 ) {
+
+    if (!grupo || grupo.length === 0) {
+        return;
+    }
 
     const tempo =
         storyMusic.currentTime;
@@ -826,9 +837,7 @@ function rodarFotosRapidas(
     }
 
     if (indice >= grupo.length) {
-
-        indice =
-            grupo.length - 1;
+        indice = grupo.length - 1;
     }
 
     mostrarFotoStory(
@@ -838,39 +847,13 @@ function rodarFotosRapidas(
 
 
 /* =========================================
-   FADE DA FOTO
-========================================= */
-
-function fadeFotoStory() {
-
-    storyPhoto.style.transition =
-        "opacity 3.5s ease";
-
-    storyPhoto.style.opacity = "0";
-}
-
-
-/* =========================================
-   HISTÓRIA
-========================================= */
-
-const primeiraParteHistoria =
-`Quem diria que nós iríamos conhecer em um jogo,
-naquele momento eu nem poderia acreditar que isso estaria por vir,
-você sentada no banco daquele jogo escutando música,
-e eu olhando pra minha futura namorada sem nem saber,
-quem diria que iríamos passar por momentos bons e momentos ruins
-até chegar aqui meu amor, sou muito grato por ter entrado no alone aquela madrugada.`;
-
-
-/* =========================================
    ESCREVER TEXTO
 ========================================= */
 
 function escreverHistoria(
     elemento,
     texto,
-    velocidade = 45
+    velocidade = 35
 ) {
 
     elemento.innerHTML = "";
@@ -901,6 +884,27 @@ function escreverHistoria(
 
 
 /* =========================================
+   PRIMEIRA PARTE DA HISTÓRIA
+========================================= */
+
+const primeiraParteHistoria =
+`Quem diria que nós iríamos conhecer em um jogo,
+naquele momento eu nem poderia acreditar que isso estaria por vir,
+você sentada no banco daquele jogo escutando música,
+e eu olhando pra minha futura namorada sem nem saber,
+quem diria que iríamos passar por momentos bons e momentos ruins
+até chegar aqui meu amor, sou muito grato por ter entrado no alone aquela madrugada.`;
+
+
+/* =========================================
+   TEXTO DE ABERTURA
+========================================= */
+
+const textoAbertura =
+"feito pra você meu amor!!";
+
+
+/* =========================================
    INICIAR EXPERIÊNCIA
 ========================================= */
 
@@ -911,6 +915,8 @@ function iniciarExperiencia() {
     );
 
     storyExperience.style.opacity = "1";
+
+    storyMusic.pause();
 
     storyMusic.currentTime = 0;
 
@@ -932,49 +938,120 @@ function iniciarExperiencia() {
 
     finalLove.style.opacity = "0";
 
+    storyOpeningText.innerHTML = "";
+
+    storyText.innerHTML = "";
+
     ultimaFotoStory = "";
 
     historiaComecou = false;
 
-    storyMusic.play()
-        .then(() => {
+    primeiraHistoriaEscrita = false;
 
-            requestAnimationFrame(
-                atualizarExperiencia
-            );
 
-        })
-        .catch(erro => {
+    /*
+     * A experiência começa no silêncio.
+     * O texto aparece primeiro.
+     */
 
-            console.error(
-                "Erro ao iniciar música:",
-                erro
-            );
+    setTimeout(() => {
 
-        });
+        escreverHistoria(
+            storyOpeningText,
+            textoAbertura,
+            80
+        );
+
+        storyOpeningText.style.opacity =
+            "1";
+
+    }, 800);
+
+
+    /*
+     * Depois de alguns segundos,
+     * a primeira história começa.
+     */
+
+    setTimeout(() => {
+
+        storyOpeningText.style.opacity =
+            "0";
+
+        storyBlack.style.opacity =
+            "1";
+
+        storyText.style.opacity =
+            "1";
+
+        historiaComecou = true;
+
+        escreverHistoria(
+            storyText,
+            primeiraParteHistoria,
+            35
+        );
+
+    }, 6500);
+
+
+    /*
+     * A música começa 3 segundos
+     * depois da história.
+     */
+
+    setTimeout(() => {
+
+        storyMusic.play()
+            .then(() => {
+
+                requestAnimationFrame(
+                    atualizarExperiencia
+                );
+
+            })
+            .catch(erro => {
+
+                console.error(
+                    "Erro ao iniciar música:",
+                    erro
+                );
+
+            });
+
+    }, 9500);
 }
 
 
 /* =========================================
-   TIMELINE
+   TIMELINE DA MÚSICA
 ========================================= */
 
 function atualizarExperiencia() {
+
+    if (
+        storyMusic.paused ||
+        storyMusic.ended
+    ) {
+        return;
+    }
 
     const tempo =
         storyMusic.currentTime;
 
 
     /* =====================================
-       00:00 → 07.0
+       00:00 → 05.0
+       Música começa com história
     ====================================== */
 
     if (
         tempo >= 0 &&
-        tempo < 7
+        tempo < 5
     ) {
 
-        storyBlack.style.opacity = "1";
+        storyBlack.style.opacity =
+            "1";
 
         storyOpeningText.style.opacity =
             "0";
@@ -983,37 +1060,18 @@ function atualizarExperiencia() {
             "0";
 
         storyText.style.opacity =
-            "0";
+            "1";
     }
 
 
     /* =====================================
-       07.0 → 11.0
+       05.0 → 12.0
+       HISTÓRIA
     ====================================== */
 
     else if (
-        tempo >= 7 &&
-        tempo < 11
-    ) {
-
-        storyBlack.style.opacity =
-            "1";
-
-        storyOpeningText.style.opacity =
-            "1";
-
-        storyOpeningText.innerHTML =
-            "feito pra você meu amor!!";
-    }
-
-
-    /* =====================================
-       11.0 → 30.0
-    ====================================== */
-
-    else if (
-        tempo >= 11 &&
-        tempo < 30
+        tempo >= 5 &&
+        tempo < 12
     ) {
 
         storyBlack.style.opacity =
@@ -1021,48 +1079,27 @@ function atualizarExperiencia() {
 
         storyOpeningText.style.opacity =
             "0";
-    }
-
-
-    /* =====================================
-       30.0 → 40.0
-    ====================================== */
-
-    else if (
-        tempo >= 30 &&
-        tempo < 40
-    ) {
-
-        storyBlack.style.opacity =
-            "0";
-
-        storyText.style.opacity =
-            "1";
 
         storyPhoto.style.opacity =
             "0";
 
-        if (!historiaComecou) {
-
-            historiaComecou = true;
-
-            escreverHistoria(
-                storyText,
-                primeiraParteHistoria,
-                35
-            );
-        }
+        storyText.style.opacity =
+            "1";
     }
 
 
     /* =====================================
-       40.0 → 46.3
+       12.0 → 16.0
+       PRIMEIRA FOTO
     ====================================== */
 
     else if (
-        tempo >= 40 &&
-        tempo < 46.3
+        tempo >= 12 &&
+        tempo < 16
     ) {
+
+        storyBlack.style.opacity =
+            "0";
 
         storyText.style.opacity =
             "0";
@@ -1077,33 +1114,39 @@ function atualizarExperiencia() {
 
 
     /* =====================================
-       46.3 → 50.3
-       SEQUÊNCIA RÁPIDA
+       16.0 → 20.0
+       SEQUÊNCIA 1
     ====================================== */
 
     else if (
-        tempo >= 46.3 &&
-        tempo < 50.3
+        tempo >= 16 &&
+        tempo < 20
     ) {
+
+        storyBlack.style.opacity =
+            "0";
 
         storyText.style.opacity =
             "0";
 
+        storyPhoto.style.opacity =
+            "1";
+
         rodarFotosRapidas(
             grupo1,
-            46.3
+            16
         );
     }
 
 
     /* =====================================
-       50.3 → 54.0
+       20.0 → 24.0
        FOTO ESPECIAL
     ====================================== */
 
     else if (
-        tempo >= 50.3 &&
-        tempo < 54
+        tempo >= 20 &&
+        tempo < 24
     ) {
 
         mostrarFotoStory(
@@ -1113,30 +1156,30 @@ function atualizarExperiencia() {
 
 
     /* =====================================
-       54.0 → 57.0
-       SEQUÊNCIA RÁPIDA
+       24.0 → 28.0
+       SEQUÊNCIA 2
     ====================================== */
 
     else if (
-        tempo >= 54 &&
-        tempo < 57
+        tempo >= 24 &&
+        tempo < 28
     ) {
 
         rodarFotosRapidas(
             grupo2,
-            54
+            24
         );
     }
 
 
     /* =====================================
-       57.0 → 61.7
-       FOTO ESPECIAL
+       28.0 → 33.0
+       FOTO ESPECIAL 2
     ====================================== */
 
     else if (
-        tempo >= 57 &&
-        tempo < 61.7
+        tempo >= 28 &&
+        tempo < 33
     ) {
 
         mostrarFotoStory(
@@ -1146,30 +1189,30 @@ function atualizarExperiencia() {
 
 
     /* =====================================
-       61.7 → 65.0
-       SEQUÊNCIA RÁPIDA
+       33.0 → 36.3
+       SEQUÊNCIA 3
     ====================================== */
 
     else if (
-        tempo >= 61.7 &&
-        tempo < 65
+        tempo >= 33 &&
+        tempo < 36.3
     ) {
 
         rodarFotosRapidas(
             grupo3,
-            61.7
+            33
         );
     }
 
 
     /* =====================================
-       65.0 → 69.5
-       FOTO ESPECIAL
+       36.3 → 41.0
+       FOTO ESPECIAL 3
     ====================================== */
 
     else if (
-        tempo >= 65 &&
-        tempo < 69.5
+        tempo >= 36.3 &&
+        tempo < 41
     ) {
 
         mostrarFotoStory(
@@ -1179,17 +1222,17 @@ function atualizarExperiencia() {
 
 
     /* =====================================
-       69.5 → 73.0
+       41.0 → 44.5
        ÚLTIMA SEQUÊNCIA
     ====================================== */
 
     else if (
-        tempo >= 69.5 &&
-        tempo < 73
+        tempo >= 41 &&
+        tempo < 44.5
     ) {
 
         const tempoDecorrido =
-            tempo - 69.5;
+            tempo - 41;
 
         const intervalo =
             0.300;
@@ -1211,32 +1254,29 @@ function atualizarExperiencia() {
 
         } else {
 
-            /*
-             * FOTO 24 É A ÚLTIMA
-             */
             mostrarFotoStory(
-                "imagens/fotos/foto24.jpg"
+                "imagens/foto24.jpg"
             );
         }
     }
 
 
     /* =====================================
-       73.0 → 76.5
-       FOTO 24 SUMINDO
+       44.5 → 48.0
+       FOTO 24
     ====================================== */
 
     else if (
-        tempo >= 73 &&
-        tempo < 76.5
+        tempo >= 44.5 &&
+        tempo < 48
     ) {
 
         mostrarFotoStory(
-            "imagens/fotos/foto24.jpg"
+            "imagens/foto24.jpg"
         );
 
         const progresso =
-            (tempo - 73) / 3.5;
+            (tempo - 44.5) / 3.5;
 
         storyPhoto.style.opacity =
             String(1 - progresso);
@@ -1244,45 +1284,28 @@ function atualizarExperiencia() {
 
 
     /* =====================================
-       76.5 → 117.0
-       HISTÓRIA
+       48.0 EM DIANTE
+       VOLTA PARA O PRETO
     ====================================== */
 
     else if (
-        tempo >= 76.5 &&
-        tempo < 117
+        tempo >= 48
     ) {
-
-        storyBlack.style.opacity =
-            "1";
 
         storyPhoto.style.opacity =
             "0";
 
-        storyText.style.opacity =
+        storyBlack.style.opacity =
             "1";
 
-        /*
-         * A segunda parte da história
-         * vamos colocar depois que
-         * você me passar o texto.
-         */
+        storyText.style.opacity =
+            "1";
     }
 
 
-    /* =====================================
-       FINAL DO ÁUDIO
-    ====================================== */
-
-    if (
-        !storyMusic.paused &&
-        !storyMusic.ended
-    ) {
-
-        requestAnimationFrame(
-            atualizarExperiencia
-        );
-    }
+    requestAnimationFrame(
+        atualizarExperiencia
+    );
 }
 
 
@@ -1292,14 +1315,18 @@ function atualizarExperiencia() {
 
 let toqueInicialY = 0;
 
+
 pullUp.addEventListener(
     "touchstart",
     (evento) => {
 
         toqueInicialY =
             evento.touches[0].clientY;
+
     },
-    { passive: true }
+    {
+        passive: true
+    }
 );
 
 
@@ -1314,7 +1341,9 @@ pullUp.addEventListener(
             toqueInicialY -
             toqueFinalY;
 
-        if (distancia > 80) {
+        if (
+            distancia > 80
+        ) {
 
             pullUp.classList.add(
                 "hidden"
@@ -1326,8 +1355,11 @@ pullUp.addEventListener(
 
             }, 800);
         }
+
     },
-    { passive: true }
+    {
+        passive: true
+    }
 );
 
 
